@@ -7,7 +7,7 @@ class User {
   Pointer<Void> _hclUser;
 
   User(this._hclw, String email, String password, String firstName, String lastName) {
-    _hclUser = _hclw.getAPIFunction('CreateUserUser')(Utf8.toUtf8(email), Utf8.toUtf8(password), Utf8.toUtf8(firstName), Utf8.toUtf8(lastName));
+    _hclUser = _hclw.getAPIFunction('CreateUser')(Utf8.toUtf8(email), Utf8.toUtf8(password), Utf8.toUtf8(firstName), Utf8.toUtf8(lastName));
   }
 
   get email {

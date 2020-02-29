@@ -6,8 +6,11 @@ class Secret {
   HclwFlutter _hclw;
   Pointer<Void> _hclSecret;
 
-  Secret(this._hclw, String content) {
-    _hclSecret = _hclw.getAPIFunction('GetSecretFromContent')(Utf8.toUtf8(content));
+  Secret(this._hclw, {String content}) {
+    if (content != null)
+      _hclSecret = _hclw.getAPIFunction('GetSecretFromContent')(Utf8.toUtf8(content));
+    else
+      _hclSecret = _hclw.getAPIFunction('CreateSecret')();
   }
 
   get content {
