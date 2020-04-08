@@ -6,9 +6,9 @@ class Secret {
   HclwFlutter _hclw;
   Pointer<Void> _hclSecret;
 
-  Secret(this._hclw, {String content}) {
-    if (content != null)
-      _hclSecret = _hclw.getAPIFunction('GetSecretFromContent')(Utf8.toUtf8(content));
+  Secret(this._hclw, {String key, String content}) {
+    if (key != null && content != null)
+      _hclSecret = _hclw.getAPIFunction('GetSecretFromContent')(Utf8.toUtf8(key), Utf8.toUtf8(content));
     else
       _hclSecret = _hclw.getAPIFunction('CreateSecret')();
   }
@@ -50,6 +50,10 @@ class Secret {
 
   set domain(domain) {
     _hclw.getAPIFunction('UpdateSecretDomain')(this._hclSecret, Utf8.toUtf8(domain));
+  }
+
+  get correctSecretDecryption {
+    return _hclw.getAPIFunction('CorrectSecretDecryption')(this._hclSecret);
   }
 
   delete() {

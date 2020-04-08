@@ -9,6 +9,9 @@ typedef fncPtrFrm2ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>);
 typedef fncPtrFrm4ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>);
 typedef fncChrArrFrmPtr = Pointer<Utf8> Function(Pointer<Void>);
 typedef fncVdFrmPtr = Void Function(Pointer<Void>);
+typedef fncUint8FrmPtr = Uint8 Function(Pointer<Void>);
+typedef fncUint8FrmPtrDart = int Function(Pointer<Void>);
+typedef fncPtrFrmVoid = Pointer<Void>Function();
 typedef fncVdFrmPtrDart = void Function(Pointer<Void>);
 typedef fncPtrFrmChrArr = Pointer<Void> Function(Pointer<Utf8>);
 typedef fncVdFrmPtrAndChrArr = Void Function(Pointer<Void>, Pointer<Utf8>);
@@ -33,7 +36,9 @@ class HclwFlutter {
     this._hclAPI['DeleteString'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteString').asFunction<fncVdFrmPtrDart>();
     // Secret functions
     this._hclAPI['GetSecretFromContent'] = this._hcl.lookup<NativeFunction<fncPtrFrmChrArr>>('GetSecretFromContent').asFunction<fncPtrFrmChrArr>();
+    this._hclAPI['CreateSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreateSecret').asFunction<fncPtrFrmVoid>();
     this._hclAPI['GetNameFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetNameFromSecret').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['CorrectSecretDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('CorrectSecretDecryption').asFunction<fncUint8FrmPtrDart>();
     this._hclAPI['GetLoginFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetLoginFromSecret').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['GetPasswordFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetPasswordFromSecret').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['GetDomainFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetDomainFromSecret').asFunction<fncChrArrFrmPtr>();
