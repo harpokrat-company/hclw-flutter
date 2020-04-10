@@ -16,7 +16,7 @@ class Secret {
   get content {
     Pointer<Void> contentString = _hclw.getAPIFunction('GetContentStringFromSecret')(this._hclSecret);
     Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);
-    _hclw.getAPIFunction('DeleteString')(contentString);
+    //_hclw.getAPIFunction('DeleteString')(contentString);
     return Utf8.fromUtf8(content);
   }
 

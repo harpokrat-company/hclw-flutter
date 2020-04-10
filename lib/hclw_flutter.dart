@@ -14,6 +14,8 @@ typedef fncUint8FrmPtrDart = int Function(Pointer<Void>);
 typedef fncPtrFrmVoid = Pointer<Void>Function();
 typedef fncVdFrmPtrDart = void Function(Pointer<Void>);
 typedef fncPtrFrmChrArr = Pointer<Void> Function(Pointer<Utf8>);
+typedef fncPtrFrmPtrDart = Pointer<Void> Function(Pointer<Void>);
+typedef fncPtrFrmVd = Pointer<Void> Function(Void);
 typedef fncVdFrmPtrAndChrArr = Void Function(Pointer<Void>, Pointer<Utf8>);
 typedef fncVdFrmPtrAndChrArrDart = void Function(Pointer<Void>, Pointer<Utf8>);
 
@@ -36,6 +38,7 @@ class HclwFlutter {
     this._hclAPI['GetCharArrayFromString'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetCharArrayFromString').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['DeleteString'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteString').asFunction<fncVdFrmPtrDart>();
     // Secret functions
+    //this._hclAPI['CreateSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmVd>>('CreateSecret').asFunction<fncPtrFrmVd>();
     this._hclAPI['GetSecretFromContent'] = this._hcl.lookup<NativeFunction<fncPtrFrmChrArr>>('GetSecretFromContent').asFunction<fncPtrFrmChrArr>();
     this._hclAPI['CreateSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreateSecret').asFunction<fncPtrFrmVoid>();
     this._hclAPI['GetNameFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetNameFromSecret').asFunction<fncChrArrFrmPtr>();
@@ -43,7 +46,7 @@ class HclwFlutter {
     this._hclAPI['GetLoginFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetLoginFromSecret').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['GetPasswordFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetPasswordFromSecret').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['GetDomainFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetDomainFromSecret').asFunction<fncChrArrFrmPtr>();
-    this._hclAPI['GetContentStringFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetContentStringFromSecret').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['GetContentStringFromSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetContentStringFromSecret').asFunction<fncPtrFrmPtrDart>();
     this._hclAPI['UpdateSecretName'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretName').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['UpdateSecretLogin'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretLogin').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['UpdateSecretPassword'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretPassword').asFunction<fncVdFrmPtrAndChrArrDart>();
@@ -63,7 +66,9 @@ class HclwFlutter {
   }
 
   getAPIFunction(String functionName) {
-    return this._hclAPI[functionName];
+    if (this._hclAPI.containsKey(functionName))
+      return this._hclAPI[functionName];
+    return null;
   }
 
   getDerivedKey(String key) {
