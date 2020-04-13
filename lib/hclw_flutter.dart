@@ -32,6 +32,7 @@ class HclwFlutter {
   _initializeAPI() {
     // String functions
     this._hclAPI['GetBasicAuthString'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('GetBasicAuthString').asFunction<fncPtrFrm2ChrArr>();
+    this._hclAPI['GetDerivedKey'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('GetDerivedKey').asFunction<fncPtrFrm2ChrArr>();
     this._hclAPI['GetCharArrayFromString'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetCharArrayFromString').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['DeleteString'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteString').asFunction<fncVdFrmPtrDart>();
     // Secret functions
@@ -63,6 +64,20 @@ class HclwFlutter {
 
   getAPIFunction(String functionName) {
     return this._hclAPI[functionName];
+  }
+
+  getDerivedKey(String key) {
+    Pointer<Void> contentString = this.getAPIFunction('GetDerivedKey')(Utf8.toUtf8(key));
+    Pointer<Utf8> content = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    this.getAPIFunction('DeleteString')(contentString);
+    return Utf8.fromUtf8(content);
+  }
+
+  getBasicAuth(String email, String key) {
+    Pointer<Void> contentString = this.getAPIFunction('GetBasicAuthString')(Utf8.toUtf8(email), Utf8.toUtf8(key));
+    Pointer<Utf8> content = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    this.getAPIFunction('DeleteString')(contentString);
+    return Utf8.fromUtf8(content);
   }
 
   static const MethodChannel _channel = const MethodChannel('hclw_flutter');
