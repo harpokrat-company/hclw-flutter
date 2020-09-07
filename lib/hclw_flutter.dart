@@ -81,11 +81,11 @@ class HclwFlutter {
     this._hclAPI['SetPublicKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetPublicKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['EncryptMessageWithPublicKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('EncryptMessageWithPublicKey').asFunction<fncPtrFrmPtrAndChrArr>();
     // SymmetricKey functions
+    this._hclAPI['CreateSymmetricKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreateSymmetricKey').asFunction<fncPtrFrmVoid>();
     this._hclAPI['GetOwnerFromSymmetricKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromSymmetricKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetSymmetricKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetSymmetricKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['GetKeyFromSymmetricKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetKeyFromSymmetricKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetSymmetricKeyKey'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetSymmetricKeyKey').asFunction<fncVdFrmPtrAndChrArrDart>();
-    // TODO
   }
 
   getAPIFunction(String functionName) {
