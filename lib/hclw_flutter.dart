@@ -10,14 +10,18 @@ typedef fncPtrFrm4ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>, 
 typedef fncChrArrFrmPtr = Pointer<Utf8> Function(Pointer<Void>);
 typedef fncVdFrmPtr = Void Function(Pointer<Void>);
 typedef fncUint8FrmPtr = Uint8 Function(Pointer<Void>);
-typedef fncUint8FrmPtrDart = int Function(Pointer<Void>);
+typedef fncIntFrmPtrDart = int Function(Pointer<Void>);
 typedef fncPtrFrmVoid = Pointer<Void>Function();
-typedef fncVdFrmPtrDart = void Function(Pointer<Void>);
+typedef fncPtrFrmUint64 = Pointer<Void>Function(Uint64);
+typedef fncPtrFrmIntDart = Pointer<Void>Function(int);
+typedef fncVdFrmPtrDart = void Function(Pointer<Void> );
 typedef fncPtrFrmChrArr = Pointer<Void> Function(Pointer<Utf8>);
 typedef fncPtrFrmPtrDart = Pointer<Void> Function(Pointer<Void>);
+typedef fncPtrFrm2PtrDart = Pointer<Void> Function(Pointer<Void>, Pointer<Void>);
 typedef fncPtrFrmVd = Pointer<Void> Function(Void);
 typedef fncVdFrmPtrAndChrArr = Void Function(Pointer<Void>, Pointer<Utf8>);
 typedef fncVdFrmPtrAndChrArrDart = void Function(Pointer<Void>, Pointer<Utf8>);
+typedef fncPtrFrmPtrAndChrArr = Pointer<Void> Function(Pointer<Void>, Pointer<Utf8>);
 
 class HclwFlutter {
   DynamicLibrary _hcl;
@@ -37,21 +41,6 @@ class HclwFlutter {
     this._hclAPI['GetDerivedKey'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('GetDerivedKey').asFunction<fncPtrFrm2ChrArr>();
     this._hclAPI['GetCharArrayFromString'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetCharArrayFromString').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['DeleteString'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteString').asFunction<fncVdFrmPtrDart>();
-    // Secret functions
-    //this._hclAPI['CreateSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmVd>>('CreateSecret').asFunction<fncPtrFrmVd>();
-    this._hclAPI['GetSecretFromContent'] = this._hcl.lookup<NativeFunction<fncPtrFrmChrArr>>('GetSecretFromContent').asFunction<fncPtrFrmChrArr>();
-    this._hclAPI['CreateSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreateSecret').asFunction<fncPtrFrmVoid>();
-    this._hclAPI['GetNameFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetNameFromSecret').asFunction<fncChrArrFrmPtr>();
-    this._hclAPI['CorrectSecretDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('CorrectSecretDecryption').asFunction<fncUint8FrmPtrDart>();
-    this._hclAPI['GetLoginFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetLoginFromSecret').asFunction<fncChrArrFrmPtr>();
-    this._hclAPI['GetPasswordFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetPasswordFromSecret').asFunction<fncChrArrFrmPtr>();
-    this._hclAPI['GetDomainFromSecret'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetDomainFromSecret').asFunction<fncChrArrFrmPtr>();
-    this._hclAPI['GetContentStringFromSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetContentStringFromSecret').asFunction<fncPtrFrmPtrDart>();
-    this._hclAPI['UpdateSecretName'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretName').asFunction<fncVdFrmPtrAndChrArrDart>();
-    this._hclAPI['UpdateSecretLogin'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretLogin').asFunction<fncVdFrmPtrAndChrArrDart>();
-    this._hclAPI['UpdateSecretPassword'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretPassword').asFunction<fncVdFrmPtrAndChrArrDart>();
-    this._hclAPI['UpdateSecretDomain'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateSecretDomain').asFunction<fncVdFrmPtrAndChrArrDart>();
-    this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteSecret').asFunction<fncVdFrmPtrDart>();
     // User functions
     this._hclAPI['CreateUser'] = this._hcl.lookup<NativeFunction<fncPtrFrm4ChrArr>>('CreateUser').asFunction<fncPtrFrm4ChrArr>();
     this._hclAPI['GetEmailFromUser'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetEmailFromUser').asFunction<fncChrArrFrmPtr>();
@@ -63,6 +52,40 @@ class HclwFlutter {
     this._hclAPI['UpdateUserFirstName'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateUserFirstName').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['UpdateUserLastName'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdateUserLastName').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['DeleteUser'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteUser').asFunction<fncVdFrmPtrDart>();
+    // RSAKeyPair functions
+    this._hclAPI['GenerateRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmUint64>>('GenerateRSAKeyPair').asFunction<fncPtrFrmIntDart>();
+    this._hclAPI['GetPublicKeyFromRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetPublicKeyFromRSAKeyPair').asFunction<fncPtrFrmPtrDart>();
+    this._hclAPI['GetPrivateKeyFromRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetPrivateKeyFromRSAKeyPair').asFunction<fncPtrFrmPtrDart>();
+    // ASecret functions
+    this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('DeserializeSecret').asFunction<fncPtrFrm2ChrArr>();
+    this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecret').asFunction<fncPtrFrm2PtrDart>();
+    this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeserializeSecret').asFunction<fncVdFrmPtrDart>();
+    // Password functions
+    this._hclAPI['CreatePassword'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreatePassword').asFunction<fncPtrFrmVoid>();
+    this._hclAPI['GetNameFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetNameFromPassword').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['CorrectPasswordDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('CorrectPasswordDecryption').asFunction<fncIntFrmPtrDart>();
+    this._hclAPI['GetLoginFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetLoginFromPassword').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['GetPasswordFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetPasswordFromPassword').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['GetDomainFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetDomainFromPassword').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['UpdatePasswordName'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordName').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['UpdatePasswordLogin'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordLogin').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['UpdatePasswordPassword'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordPassword').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['UpdatePasswordDomain'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordDomain').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['DeletePassword'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeletePassword').asFunction<fncVdFrmPtrDart>();
+    // RSAPrivateKey functions
+    this._hclAPI['GetOwnerFromPrivateKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromPrivateKey').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['SetPrivateKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetPrivateKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['DecryptMessageWithPrivateKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DecryptMessageWithPrivateKey').asFunction<fncPtrFrmPtrAndChrArr>();
+    // RSAPublicKey functions
+    this._hclAPI['GetOwnerFromPublicKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromPublicKey').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['SetPublicKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetPublicKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['EncryptMessageWithPublicKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('EncryptMessageWithPublicKey').asFunction<fncPtrFrmPtrAndChrArr>();
+    // SymmetricKey functions
+    this._hclAPI['GetOwnerFromSymmetricKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromSymmetricKey').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['SetSymmetricKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetSymmetricKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
+    this._hclAPI['GetKeyFromSymmetricKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetKeyFromSymmetricKey').asFunction<fncChrArrFrmPtr>();
+    this._hclAPI['SetSymmetricKeyKey'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetSymmetricKeyKey').asFunction<fncVdFrmPtrAndChrArrDart>();
+    // TODO
   }
 
   getAPIFunction(String functionName) {
