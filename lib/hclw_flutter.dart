@@ -4,6 +4,10 @@ import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 import 'package:flutter/services.dart';
+import 'package:hclw_flutter/password.dart';
+import 'package:hclw_flutter/rsaprivatekey.dart';
+import 'package:hclw_flutter/rsapublickey.dart';
+import 'package:hclw_flutter/symmetrickey.dart';
 
 typedef fncPtrFrm2ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>);
 typedef fncPtrFrm4ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>);
@@ -56,14 +60,16 @@ class HclwFlutter {
     this._hclAPI['GenerateRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmUint64>>('GenerateRSAKeyPair').asFunction<fncPtrFrmIntDart>();
     this._hclAPI['GetPublicKeyFromRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetPublicKeyFromRSAKeyPair').asFunction<fncPtrFrmPtrDart>();
     this._hclAPI['GetPrivateKeyFromRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetPrivateKeyFromRSAKeyPair').asFunction<fncPtrFrmPtrDart>();
+    this._hclAPI['DeleteRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteRSAKeyPair').asFunction<fncVdFrmPtrDart>();
     // ASecret functions
     this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('DeserializeSecret').asFunction<fncPtrFrm2ChrArr>();
     this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecret').asFunction<fncPtrFrm2PtrDart>();
+    this._hclAPI['GetSecretCorrectDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('GetSecretCorrectDecryption').asFunction<fncIntFrmPtrDart>();
+    this._hclAPI['GetSecretTypeName'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('GetSecretTypeName').asFunction<fncPtrFrmVoid>();
     this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeserializeSecret').asFunction<fncVdFrmPtrDart>();
     // Password functions
     this._hclAPI['CreatePassword'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreatePassword').asFunction<fncPtrFrmVoid>();
     this._hclAPI['GetNameFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetNameFromPassword').asFunction<fncChrArrFrmPtr>();
-    this._hclAPI['CorrectPasswordDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('CorrectPasswordDecryption').asFunction<fncIntFrmPtrDart>();
     this._hclAPI['GetLoginFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetLoginFromPassword').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['GetPasswordFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetPasswordFromPassword').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['GetDomainFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetDomainFromPassword').asFunction<fncChrArrFrmPtr>();
@@ -106,6 +112,31 @@ class HclwFlutter {
     Pointer<Utf8> content = this.getAPIFunction('GetCharArrayFromString')(contentString);
     this.getAPIFunction('DeleteString')(contentString);
     return Utf8.fromUtf8(content);
+  }
+
+  deserializeSecret(String key, String serializedContent) {
+    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(key, serializedContent);
+    Pointer<Void> contentString = this.getAPIFunction('GetSecretTypeName')(secret);
+    Pointer<Utf8> typeName = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    this.getAPIFunction('DeleteString')(contentString);
+    switch (typeName.toString()) {
+      case "password": {
+        return new Password(this, secret: secret);
+      }
+      break;
+      case "private-key": {
+        return new RSAPrivateKey(this, secret);
+      }
+      break;
+      case "public-key": {
+        return new RSAPublicKey(this, secret);
+      }
+      break;
+      case "symmetric-key": {
+        return new SymmetricKey(this, secret: secret);
+      }
+      break;
+    }
   }
 
   static const MethodChannel _channel = const MethodChannel('hclw_flutter');
