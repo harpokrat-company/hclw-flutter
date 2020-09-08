@@ -8,8 +8,8 @@ class ASecret {
 
   ASecret(this._hclw, this._hclSecret);
 
-  serialize(String encryptionKey) {
-    Pointer<Void> contentString = _hclw.getAPIFunction('SerializeSecret')(this._hclSecret, Utf8.toUtf8(encryptionKey));
+  serialize(Pointer<Void> encryptionKey) {
+    Pointer<Void> contentString = _hclw.getAPIFunction('SerializeSecret')(this._hclSecret, encryptionKey);
     Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);
     _hclw.getAPIFunction('DeleteString')(contentString);
     return Utf8.fromUtf8(content);
