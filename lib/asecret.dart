@@ -15,6 +15,14 @@ class ASecret {
     return Utf8.fromUtf8(content);
   }
 
+  initializeAsymmetric() {
+    _hclw.getAPIFunction('SecretInitializeAsymmetricCipher')(this._hclSecret);
+  }
+
+  initializeSymmetric() {
+    _hclw.getAPIFunction('SecretInitializeSymmetricCipher')(this._hclSecret);
+  }
+
   get typeName {
     Pointer<Void> contentString = _hclw.getAPIFunction('GetSecretTypeName')(this._hclSecret);
     Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);

@@ -13,12 +13,12 @@ typedef fncPtrFrm2ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>);
 typedef fncPtrFrm4ChrArr = Pointer<Void> Function(Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>, Pointer<Utf8>);
 typedef fncChrArrFrmPtr = Pointer<Utf8> Function(Pointer<Void>);
 typedef fncVdFrmPtr = Void Function(Pointer<Void>);
+typedef fncVdFrmPtrDart = void Function(Pointer<Void>);
 typedef fncUint8FrmPtr = Uint8 Function(Pointer<Void>);
 typedef fncIntFrmPtrDart = int Function(Pointer<Void>);
 typedef fncPtrFrmVoid = Pointer<Void>Function();
 typedef fncPtrFrmUint64 = Pointer<Void>Function(Uint64);
 typedef fncPtrFrmIntDart = Pointer<Void>Function(int);
-typedef fncVdFrmPtrDart = void Function(Pointer<Void> );
 typedef fncPtrFrmChrArr = Pointer<Void> Function(Pointer<Utf8>);
 typedef fncPtrFrmPtrDart = Pointer<Void> Function(Pointer<Void>);
 typedef fncPtrFrm2PtrDart = Pointer<Void> Function(Pointer<Void>, Pointer<Void>);
@@ -65,6 +65,8 @@ class HclwFlutter {
     this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DeserializeSecret').asFunction<fncPtrFrmPtrAndChrArr>();
     this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecret').asFunction<fncPtrFrm2PtrDart>();
     this._hclAPI['GetSecretCorrectDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('GetSecretCorrectDecryption').asFunction<fncIntFrmPtrDart>();
+    this._hclAPI['SecretInitializeAsymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeAsymmetricCipher').asFunction<fncVdFrmPtrDart>();
+    this._hclAPI['SecretInitializeSymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeSymmetricCipher').asFunction<fncVdFrmPtrDart>();
     this._hclAPI['GetSecretTypeName'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('GetSecretTypeName').asFunction<fncPtrFrmVoid>();
     this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeserializeSecret').asFunction<fncVdFrmPtrDart>();
     // Password functions
