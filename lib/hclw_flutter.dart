@@ -62,7 +62,7 @@ class HclwFlutter {
     this._hclAPI['GetPrivateKeyFromRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetPrivateKeyFromRSAKeyPair').asFunction<fncPtrFrmPtrDart>();
     this._hclAPI['DeleteRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteRSAKeyPair').asFunction<fncVdFrmPtrDart>();
     // ASecret functions
-    this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('DeserializeSecret').asFunction<fncPtrFrm2ChrArr>();
+    this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DeserializeSecret').asFunction<fncPtrFrmPtrAndChrArr>();
     this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecret').asFunction<fncPtrFrm2PtrDart>();
     this._hclAPI['GetSecretCorrectDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('GetSecretCorrectDecryption').asFunction<fncIntFrmPtrDart>();
     this._hclAPI['GetSecretTypeName'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('GetSecretTypeName').asFunction<fncPtrFrmVoid>();
@@ -113,8 +113,8 @@ class HclwFlutter {
     return Utf8.fromUtf8(content);
   }
 
-  deserializeSecret(String key, String serializedContent) {
-    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(key, serializedContent);
+  deserializeSecret(Pointer<Void> key, String serializedContent) {
+    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(key, Utf8.toUtf8(serializedContent));
     Pointer<Void> contentString = this.getAPIFunction('GetSecretTypeName')(secret);
     Pointer<Utf8> typeName = this.getAPIFunction('GetCharArrayFromString')(contentString);
     this.getAPIFunction('DeleteString')(contentString);
