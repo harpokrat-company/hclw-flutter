@@ -77,7 +77,6 @@ class HclwFlutter {
     this._hclAPI['UpdatePasswordLogin'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordLogin').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['UpdatePasswordPassword'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordPassword').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['UpdatePasswordDomain'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('UpdatePasswordDomain').asFunction<fncVdFrmPtrAndChrArrDart>();
-    this._hclAPI['DeletePassword'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeletePassword').asFunction<fncVdFrmPtrDart>();
     // RSAPrivateKey functions
     this._hclAPI['GetOwnerFromPrivateKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromPrivateKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetPrivateKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetPrivateKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
