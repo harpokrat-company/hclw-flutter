@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:hclw_flutter/hclw_flutter.dart';
+import 'package:hclw_flutter/rsapublickey.dart';
 
 class ASecret {
   HclwFlutter _hclw;
@@ -10,6 +11,15 @@ class ASecret {
 
   serialize(String encryptionKey) {
     Pointer<Void> contentString = _hclw.getAPIFunction('SerializeSecret')(this._hclSecret, Utf8.toUtf8(encryptionKey));
+    Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);
+    _hclw.getAPIFunction('DeleteString')(contentString);
+    return Utf8.fromUtf8(content);
+  }
+
+  serializeAsymmetric(RSAPublicKey encryptionKey) {
+    Pointer<Void> rsa_key = _hclw.getAPIFunction('ExtractKeyFromPublicKey')(encryptionKey.secret);
+    Pointer<Void> contentString = _hclw.getAPIFunction('SerializeSecretAsymmetric')(this._hclSecret, rsa_key);
+    _hclw.getAPIFunction('DeleteRSAKey')(rsa_key);
     Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);
     _hclw.getAPIFunction('DeleteString')(contentString);
     return Utf8.fromUtf8(content);

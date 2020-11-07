@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 import 'package:flutter/services.dart';
+import 'package:hclw_flutter/asecret.dart';
 import 'package:hclw_flutter/password.dart';
 import 'package:hclw_flutter/rsaprivatekey.dart';
 import 'package:hclw_flutter/rsapublickey.dart';
@@ -83,16 +84,20 @@ class HclwFlutter {
     this._hclAPI['GetOwnerFromPrivateKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromPrivateKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetPrivateKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetPrivateKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['DecryptMessageWithPrivateKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DecryptMessageWithPrivateKey').asFunction<fncPtrFrmPtrAndChrArr>();
+    this._hclAPI['ExtractKeyFromPrivateKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('ExtractKeyFromPrivateKey').asFunction<fncPtrFrmPtrDart>();
     // RSAPublicKey functions
     this._hclAPI['GetOwnerFromPublicKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromPublicKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetPublicKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetPublicKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['EncryptMessageWithPublicKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('EncryptMessageWithPublicKey').asFunction<fncPtrFrmPtrAndChrArr>();
+    this._hclAPI['ExtractKeyFromPublicKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('ExtractKeyFromPublicKey').asFunction<fncPtrFrmPtrDart>();
     // SymmetricKey functions
     this._hclAPI['CreateSymmetricKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreateSymmetricKey').asFunction<fncPtrFrmVoid>();
     this._hclAPI['GetOwnerFromSymmetricKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetOwnerFromSymmetricKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetSymmetricKeyOwner'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetSymmetricKeyOwner').asFunction<fncVdFrmPtrAndChrArrDart>();
     this._hclAPI['GetKeyFromSymmetricKey'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetKeyFromSymmetricKey').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['SetSymmetricKeyKey'] = this._hcl.lookup<NativeFunction<fncVdFrmPtrAndChrArr>>('SetSymmetricKeyKey').asFunction<fncVdFrmPtrAndChrArrDart>();
+    // RSAKey functions
+    this._hclAPI['DeleteRSAKey'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteRSAKey').asFunction<fncVdFrmPtrDart>();
   }
 
   getAPIFunction(String functionName) {
@@ -115,8 +120,7 @@ class HclwFlutter {
     return Utf8.fromUtf8(content);
   }
 
-  deserializeSecret(String key, String serializedContent) {
-    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(Utf8.toUtf8(key), Utf8.toUtf8(serializedContent));
+  autoCastSecret(Pointer<Void> secret) {
     Pointer<Void> contentString = this.getAPIFunction('GetSecretTypeName')(secret);
     Pointer<Utf8> typeName = this.getAPIFunction('GetCharArrayFromString')(contentString);
     this.getAPIFunction('DeleteString')(contentString);
@@ -138,6 +142,18 @@ class HclwFlutter {
       }
       break;
     }
+  }
+
+  deserializeSecret(String key, String serializedContent) {
+    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(Utf8.toUtf8(key), Utf8.toUtf8(serializedContent));
+    return autoCastSecret(secret);
+  }
+
+  deserializeSecretAsymmetric(RSAPrivateKey key, String serializedContent) {
+    Pointer<Void> rsaKey = this.getAPIFunction('ExtractKeyFromPrivateKey')(key.secret);
+    Pointer<Void> secret = this.getAPIFunction('DeserializeSecretAsymmetric')(rsaKey, Utf8.toUtf8(serializedContent));
+    this.getAPIFunction('DeleteRSAKey')(rsaKey);
+    return autoCastSecret(secret);
   }
 
   static const MethodChannel _channel = const MethodChannel('hclw_flutter');
