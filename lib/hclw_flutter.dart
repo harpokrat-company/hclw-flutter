@@ -115,8 +115,8 @@ class HclwFlutter {
     return Utf8.fromUtf8(content);
   }
 
-  deserializeSecret(Pointer<Void> key, String serializedContent) {
-    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(key, Utf8.toUtf8(serializedContent));
+  deserializeSecret(String key, String serializedContent) {
+    Pointer<Void> secret = this.getAPIFunction('DeserializeSecret')(Utf8.toUtf8(key), Utf8.toUtf8(serializedContent));
     Pointer<Void> contentString = this.getAPIFunction('GetSecretTypeName')(secret);
     Pointer<Utf8> typeName = this.getAPIFunction('GetCharArrayFromString')(contentString);
     this.getAPIFunction('DeleteString')(contentString);
