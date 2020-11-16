@@ -65,6 +65,8 @@ class HclwFlutter {
     // ASecret functions
     this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DeserializeSecret').asFunction<fncPtrFrmPtrAndChrArr>();
     this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecret').asFunction<fncPtrFrm2PtrDart>();
+    this._hclAPI['DeserializeSecretAsymmetric'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DeserializeSecretAsymmetric').asFunction<fncPtrFrmPtrAndChrArr>();
+    this._hclAPI['SerializeSecretAsymmetric'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecretAsymmetric').asFunction<fncPtrFrm2PtrDart>();
     this._hclAPI['GetSecretCorrectDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('GetSecretCorrectDecryption').asFunction<fncIntFrmPtrDart>();
     this._hclAPI['SecretInitializeAsymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeAsymmetricCipher').asFunction<fncVdFrmPtrDart>();
     this._hclAPI['SecretInitializeSymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeSymmetricCipher').asFunction<fncVdFrmPtrDart>();
