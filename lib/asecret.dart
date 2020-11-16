@@ -12,8 +12,9 @@ class ASecret {
   serialize(String encryptionKey) {
     Pointer<Void> contentString = _hclw.getAPIFunction('SerializeSecret')(this._hclSecret, Utf8.toUtf8(encryptionKey));
     Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);
+    final r = Utf8.fromUtf8(content);
     _hclw.getAPIFunction('DeleteString')(contentString);
-    return Utf8.fromUtf8(content);
+    return r;
   }
 
   serializeAsymmetric(RSAPublicKey encryptionKey) {
@@ -21,8 +22,9 @@ class ASecret {
     Pointer<Void> contentString = _hclw.getAPIFunction('SerializeSecretAsymmetric')(this._hclSecret, rsa_key);
     _hclw.getAPIFunction('DeleteRSAKey')(rsa_key);
     Pointer<Utf8> content = _hclw.getAPIFunction('GetCharArrayFromString')(contentString);
+    final r = Utf8.fromUtf8(content);
     _hclw.getAPIFunction('DeleteString')(contentString);
-    return Utf8.fromUtf8(content);
+    return r;
   }
 
   initializeAsymmetric() {

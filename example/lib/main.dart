@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:hclw_flutter/hclw_flutter.dart';
+import 'package:hclw_flutter/rsakeypair.dart';
+import 'package:hclw_flutter/password.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +25,37 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
+
+    final lib = new HclwFlutter();
+    print("Libraries loaded");
+
+    print("PLOP");
+    Stopwatch watch = new Stopwatch();
+    watch.start();
+    final keyPair = new RSAKeyPair(lib, 2048);
+    print("KeyPair creation ${watch.elapsedMilliseconds / 1000}");
+    watch.stop();
+
+    watch.reset();
+    watch.start();
+    final private = keyPair.createPrivateKey();
+    print("PrivateKey creation ${watch.elapsedMilliseconds / 1000}");
+    watch.stop();
+
+    watch.reset();
+    watch.start();
+    final public = keyPair.createPublicKey();
+    print("PublicKey creation ${watch.elapsedMilliseconds / 1000}");
+    watch.stop();
+
+    var sec = new Password(lib);
+    sec.password = "plpop";
+
+    sec.initializeAsymmetric();
+    final ser = sec.serializeAsymmetric(public);
+
+    final result = lib.deserializeSecretAsymmetric(private, ser);
+
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await HclwFlutter.platformVersion;

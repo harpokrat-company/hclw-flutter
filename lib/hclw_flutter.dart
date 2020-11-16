@@ -109,22 +109,25 @@ class HclwFlutter {
   getDerivedKey(String key) {
     Pointer<Void> contentString = this.getAPIFunction('GetDerivedKey')(Utf8.toUtf8(key));
     Pointer<Utf8> content = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    final r = Utf8.fromUtf8(content);
     this.getAPIFunction('DeleteString')(contentString);
-    return Utf8.fromUtf8(content);
+    return r;
   }
 
   getBasicAuth(String email, String key) {
     Pointer<Void> contentString = this.getAPIFunction('GetBasicAuthString')(Utf8.toUtf8(email), Utf8.toUtf8(key));
     Pointer<Utf8> content = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    final r = Utf8.fromUtf8(content);
     this.getAPIFunction('DeleteString')(contentString);
-    return Utf8.fromUtf8(content);
+    return r;
   }
 
   autoCastSecret(Pointer<Void> secret) {
     Pointer<Void> contentString = this.getAPIFunction('GetSecretTypeName')(secret);
-    Pointer<Utf8> typeName = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    Pointer<Utf8> typeNamePtr = this.getAPIFunction('GetCharArrayFromString')(contentString);
+    final typeName = Utf8.fromUtf8(typeNamePtr);
     this.getAPIFunction('DeleteString')(contentString);
-    switch (typeName.toString()) {
+    switch (typeName) {
       case "password": {
         return new Password(this, secret: secret);
       }

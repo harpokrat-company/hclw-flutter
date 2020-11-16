@@ -21,7 +21,8 @@ class RSAPublicKey extends ASecret {
             this.secret, Utf8.toUtf8(message));
     Pointer<Utf8> content =
         this.hclw.getAPIFunction('GetCharArrayFromString')(contentString);
+    final r = Utf8.fromUtf8(content);
     this.hclw.getAPIFunction('DeleteString')(contentString);
-    return Utf8.fromUtf8(content);
+    return r;
   }
 }
