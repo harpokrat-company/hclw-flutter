@@ -70,7 +70,7 @@ class HclwFlutter {
     this._hclAPI['GetSecretCorrectDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('GetSecretCorrectDecryption').asFunction<fncIntFrmPtrDart>();
     this._hclAPI['SecretInitializeAsymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeAsymmetricCipher').asFunction<fncVdFrmPtrDart>();
     this._hclAPI['SecretInitializeSymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeSymmetricCipher').asFunction<fncVdFrmPtrDart>();
-    this._hclAPI['GetSecretTypeName'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('GetSecretTypeName').asFunction<fncPtrFrmVoid>();
+    this._hclAPI['GetSecretTypeName'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetSecretTypeName').asFunction<fncPtrFrmPtrDart>();
     this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeserializeSecret').asFunction<fncVdFrmPtrDart>();
     // Password functions
     this._hclAPI['CreatePassword'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreatePassword').asFunction<fncPtrFrmVoid>();
