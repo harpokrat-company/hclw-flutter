@@ -36,18 +36,9 @@ class _MyAppState extends State<MyApp> {
     print("KeyPair creation ${watch.elapsedMilliseconds / 1000}");
     watch.stop();
 
-    watch.reset();
-    watch.start();
+
     final private = keyPair.createPrivateKey();
-    print("PrivateKey creation ${watch.elapsedMilliseconds / 1000}");
-    watch.stop();
-
-    watch.reset();
-    watch.start();
     final public = keyPair.createPublicKey();
-    print("PublicKey creation ${watch.elapsedMilliseconds / 1000}");
-    watch.stop();
-
     var sec = new Password(lib);
     sec.password = "plpop";
 
@@ -55,6 +46,7 @@ class _MyAppState extends State<MyApp> {
     final ser = sec.serializeAsymmetric(public);
 
     final result = lib.deserializeSecretAsymmetric(private, ser);
+    print(result.password);
 
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {

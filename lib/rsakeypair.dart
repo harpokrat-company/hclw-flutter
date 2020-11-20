@@ -11,14 +11,14 @@ class RSAKeyPair {
     _hclRSAKeyPair = this._hclw.getAPIFunction('GenerateRSAKeyPair')(bits);
   }
 
-  createPrivateKey() {
+  RSAPrivateKey createPrivateKey() {
     return new RSAPrivateKey(
         this._hclw,
         this._hclw.getAPIFunction('GetPrivateKeyFromRSAKeyPair')(
             this._hclRSAKeyPair));
   }
 
-  createPublicKey() {
+  RSAPublicKey createPublicKey() {
     return new RSAPublicKey(
         this._hclw,
         this._hclw.getAPIFunction('GetPublicKeyFromRSAKeyPair')(

@@ -63,8 +63,8 @@ class HclwFlutter {
     this._hclAPI['GetPrivateKeyFromRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetPrivateKeyFromRSAKeyPair').asFunction<fncPtrFrmPtrDart>();
     this._hclAPI['DeleteRSAKeyPair'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteRSAKeyPair').asFunction<fncVdFrmPtrDart>();
     // ASecret functions
-    this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DeserializeSecret').asFunction<fncPtrFrmPtrAndChrArr>();
-    this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecret').asFunction<fncPtrFrm2PtrDart>();
+    this._hclAPI['DeserializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('DeserializeSecret').asFunction<fncPtrFrm2ChrArr>();
+    this._hclAPI['SerializeSecret'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('SerializeSecret').asFunction<fncPtrFrm2ChrArr>();
     this._hclAPI['DeserializeSecretAsymmetric'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrAndChrArr>>('DeserializeSecretAsymmetric').asFunction<fncPtrFrmPtrAndChrArr>();
     this._hclAPI['SerializeSecretAsymmetric'] = this._hcl.lookup<NativeFunction<fncPtrFrm2PtrDart>>('SerializeSecretAsymmetric').asFunction<fncPtrFrm2PtrDart>();
     this._hclAPI['GetSecretCorrectDecryption'] = this._hcl.lookup<NativeFunction<fncUint8FrmPtr>>('GetSecretCorrectDecryption').asFunction<fncIntFrmPtrDart>();
@@ -72,7 +72,7 @@ class HclwFlutter {
     this._hclAPI['SecretInitializeAsymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeAsymmetricCipher').asFunction<fncVdFrmPtrDart>();
     this._hclAPI['SecretInitializeSymmetricCipher'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('SecretInitializeSymmetricCipher').asFunction<fncVdFrmPtrDart>();
     this._hclAPI['GetSecretTypeName'] = this._hcl.lookup<NativeFunction<fncPtrFrmPtrDart>>('GetSecretTypeName').asFunction<fncPtrFrmPtrDart>();
-    this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeserializeSecret').asFunction<fncVdFrmPtrDart>();
+    this._hclAPI['DeleteSecret'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteSecret').asFunction<fncVdFrmPtrDart>();
     // Password functions
     this._hclAPI['CreatePassword'] = this._hcl.lookup<NativeFunction<fncPtrFrmVoid>>('CreatePassword').asFunction<fncPtrFrmVoid>();
     this._hclAPI['GetNameFromPassword'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetNameFromPassword').asFunction<fncChrArrFrmPtr>();
