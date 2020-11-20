@@ -27,6 +27,10 @@ class ASecret {
     return r;
   }
 
+  initializePlain() {
+    _hclw.getAPIFunction('SecretInitializePlainCipher')(this._hclSecret);
+  }
+
   initializeAsymmetric() {
     _hclw.getAPIFunction('SecretInitializeAsymmetricCipher')(this._hclSecret);
   }
