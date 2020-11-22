@@ -43,7 +43,7 @@ class HclwFlutter {
   _initializeAPI() {
     // String functions
     this._hclAPI['GetBasicAuthString'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('GetBasicAuthString').asFunction<fncPtrFrm2ChrArr>();
-    this._hclAPI['GetDerivedKey'] = this._hcl.lookup<NativeFunction<fncPtrFrm2ChrArr>>('GetDerivedKey').asFunction<fncPtrFrm2ChrArr>();
+    this._hclAPI['GetDerivedKey'] = this._hcl.lookup<NativeFunction<fncPtrFrmChrArr>>('GetDerivedKey').asFunction<fncPtrFrmChrArr>();
     this._hclAPI['GetCharArrayFromString'] = this._hcl.lookup<NativeFunction<fncChrArrFrmPtr>>('GetCharArrayFromString').asFunction<fncChrArrFrmPtr>();
     this._hclAPI['DeleteString'] = this._hcl.lookup<NativeFunction<fncVdFrmPtr>>('DeleteString').asFunction<fncVdFrmPtrDart>();
     // User functions
